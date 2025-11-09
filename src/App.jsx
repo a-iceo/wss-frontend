@@ -19,8 +19,7 @@ function App() {
       // Add YouTube embed IDs to matches
       const enrichedData = data.map((match, idx) => ({
         ...match,
-        youtubeId: ['_w3t5s4s7sU', 'jL2K9Hs5c9Q', 'k5L3N7m9p1R'][idx] // Sample video IDs
-      }));
+youtubeId: ['S4L7s0F0y7I', 'BzwXNBR2d4M', 'Nv1vEH4OKnE'][idx] // Real football highlights IDs      }));
       setMatches(enrichedData);
     } catch (error) {
       console.error('Error fetching matches:', error);
