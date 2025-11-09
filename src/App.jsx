@@ -12,10 +12,7 @@ const mockMatches = [
     away_team: { id: 50, name: 'Manchester City' },
     goals: { home: null, away: null },
     venue: 'Old Trafford',
-    streams: [
-      { name: 'Stream 1 HD', url: 'https://stream.example.com/stream1', quality: '1080p' },
-      { name: 'Stream 2 SD', url: 'https://stream.example.com/stream2', quality: '720p' }
-    ]
+    stream_url: 'https://stream.example.com/manchester-united-vs-manchester-city'
   },
   {
     id: 2,
@@ -26,10 +23,7 @@ const mockMatches = [
     away_team: { id: 35, name: 'Arsenal' },
     goals: { home: null, away: null },
     venue: 'Anfield',
-    streams: [
-      { name: 'Stream 1 HD', url: 'https://stream.example.com/stream1', quality: '1080p' },
-      { name: 'Stream 2 SD', url: 'https://stream.example.com/stream2', quality: '720p' }
-    ]
+    stream_url: 'https://stream.example.com/liverpool-vs-arsenal'
   },
   {
     id: 3,
@@ -40,17 +34,13 @@ const mockMatches = [
     away_team: { id: 542, name: 'FC Barcelona' },
     goals: { home: null, away: null },
     venue: 'Santiago Bernabéu',
-    streams: [
-      { name: 'Stream 1 HD', url: 'https://stream.example.com/stream1', quality: '1080p' },
-      { name: 'Stream 2 SD', url: 'https://stream.example.com/stream2', quality: '720p' }
-    ]
+    stream_url: 'https://stream.example.com/real-madrid-vs-fc-barcelona'
   }
 ];
 
 export default function App() {
   const [matches, setMatches] = useState(mockMatches);
   const [loading, setLoading] = useState(false);
-  const [selectedMatch, setSelectedMatch] = useState(null);
 
   useEffect(() => {
     fetchMatches();
@@ -72,12 +62,7 @@ export default function App() {
   };
 
   const handleStreamClick = (match) => {
-    setSelectedMatch(match);
-  };
-
-  const handleStreamSelect = (streamUrl) => {
-    window.open(streamUrl, '_blank');
-    setSelectedMatch(null);
+    window.open(match.stream_url, '_blank');
   };
 
   return (
@@ -133,69 +118,6 @@ export default function App() {
           </div>
         ))}
       </div>
-
-      {selectedMatch && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            backgroundColor: '#1a1a2e',
-            border: '2px solid #6c5ce7',
-            borderRadius: '12px',
-            padding: '30px',
-            maxWidth: '500px',
-            color: '#fff'
-          }}>
-            <h2 style={{ marginTop: 0, marginBottom: '20px', color: '#00d4ff' }}>
-              {selectedMatch.home_team?.name} vs {selectedMatch.away_team?.name}
-            </h2>
-            <p style={{ marginBottom: '20px', color: '#aaa' }}>
-              Selecciona un stream:
-            </p>
-            {selectedMatch.streams?.map((stream, idx) => (
-              <button key={idx} onClick={() => handleStreamSelect(stream.url)} style={{
-                display: 'block',
-                width: '100%',
-                padding: '12px',
-                marginBottom: '10px',
-                backgroundColor: '#6c5ce7',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                transition: 'background-color 0.3s'
-              }} onMouseOver={(e) => e.target.style.backgroundColor = '#5d4fb8'} onMouseOut={(e) => e.target.style.backgroundColor = '#6c5ce7'}>
-                ▶ {stream.name} ({stream.quality})
-              </button>
-            ))}
-            <button onClick={() => setSelectedMatch(null)} style={{
-              display: 'block',
-              width: '100%',
-              padding: '10px',
-              marginTop: '15px',
-              backgroundColor: '#333',
-              color: '#aaa',
-              border: '1px solid #555',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '14px'
-            }}>
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
